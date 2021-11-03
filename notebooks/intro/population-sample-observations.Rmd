@@ -1,0 +1,44 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+pizza <- read.csv('datasets/pizza_delivery.csv')
+```
+
+```{r}
+pizza
+```
+
+Exercise 1.5
+
+c) Create a new data matrix which consists of the first 5 rows and first 5 variables of the data. Print this data set on the R console. Now, save this data set in your
+preferred format.
+```{r}
+pizza2 <- pizza[1:5,1:5]
+pizza2
+write.csv(pizza2,file='output/pizza2.csv')
+write.table(pizza2,file='output/pizza2.dat') 
+save(pizza2,file='output/pizza2.Rdata')
+```
+
+d) Add a new variable “NewTemperature” to the data set which converts the tem-
+perature from ◦C to ◦F.
+```{r}
+pizza$NewTemperature <- 32+1.8*pizza$temperature
+```
+
+
+e) Attach the data and list the values from the variable “NewTemperature”.
+```{r}
+attach(pizza)
+NewTemperature
+```
+
+
+```{r}
+
+```
+
