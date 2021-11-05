@@ -1,0 +1,56 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Computing arithmetic mean
+```{r}
+weather <- c(22, 24, 21, 22, 30, 28, 29)
+mean(weather)
+```
+
+
+Computing weighted arithmetic mean
+```{r}
+weighted.mean(c(22.5, 27.7, 32.5), c(12/31, 18/31, 1/31))
+```
+
+Computing median
+```{r}
+median(weather)
+```
+
+Computing quantiles
+```{r}
+quantile(weather)
+```
+
+```{r}
+quantile(weather, probs=c(0, 0.2, 0.4, 0.6, 0.8, 1))
+```
+
+
+Quantile-Quantile Plots (QQ-Plots)
+```{r}
+pizza <- read.csv('datasets/pizza_delivery.csv')
+mario <- pizza[pizza$driver == 'Mario', ]
+luigi <- pizza[pizza$driver == 'Luigi', ]
+salvatore <- pizza[pizza$drive == 'Salvatore', ]
+```
+
+```{r}
+qqplot(mario$time, salvatore$time)
+abline(0, 1)
+```
+
+```{r}
+qqplot(luigi$time, mario$time)
+abline(0, 1)
+```
+
+
+
+(a) If all the pairs of quantiles lie (nearly) on a straight line at an angle of 45% from the x-axis, then the two samples have similar distributions.
+(b) If the y-quantiles are lower than the x-quantiles, then the y-values have a tendency to be lower than the x-values.
+(c) If the x-quantiles are lower than the y-quantiles, then the x-values have a tendency to be lower than the y-values.
+(d) If there is a point where the x-quantiles are lower (or higher) than the y-quantiles for a specific range of values (a segment) it indicates that there is a break point up to which the y-quantiles are lower(or higher) than the x-quantiles and after that point, the y-quantiles are higher(or lower) than the x-quantiles.
