@@ -54,3 +54,140 @@ abline(0, 1)
 (b) If the y-quantiles are lower than the x-quantiles, then the y-values have a tendency to be lower than the x-values.
 (c) If the x-quantiles are lower than the y-quantiles, then the x-values have a tendency to be lower than the y-values.
 (d) If there is a point where the x-quantiles are lower (or higher) than the y-quantiles for a specific range of values (a segment) it indicates that there is a break point up to which the y-quantiles are lower(or higher) than the x-quantiles and after that point, the y-quantiles are higher(or lower) than the x-quantiles.
+
+
+
+# Showing Basic Statistical Metrics of Data
+```{r}
+summary(weather)
+```
+
+Computing Variance
+```{r}
+var(weather)
+```
+
+
+Standardizing a set
+```{r}
+air <- c(30,25,12,45,50,52,38,39,45,33)
+scale(air)
+```
+
+
+Creating a Boxplot (weather data)
+```{r}
+boxplot(weather, range=1.5)
+```
+
+Boxplot of pizzza delivery time
+```{r}
+boxplot(pizza$time, range=1.5)
+```
+
+Lorenz Curve
+```{r}
+library(ineq)
+x <- c(20,20,20,20,20)
+plot(Lc(x))
+```
+
+```{r}
+x <- c(34,30,30,20,10, 23, 56, 32, 12, 56)
+plot(Lc(x))
+```
+
+Computing inequality (concentration) coefficient (Gini coeff)
+```{r}
+library(ineq)
+farm <- c(20,14,59,9,36,23,3)
+plot(Lc(farm))
+```
+
+```{r}
+ineq(farm)
+```
+
+
+# Exercises
+3.1: A hiking enthusiast has a new app for his smartphone which summa- rizes his hikes by using a GPS device. Let us look at the distance hiked (in km) and maximum altitude (in m) for the last 10 hikes:
+```{r}
+distance <- c(12.5,29.9,14.8,18.7,7.6,16.2,16.5,27.4,12.1,17.5)
+altitude <- c(342,1245,502,555,398,670,796,912,238,466)
+```
+
+(a) Calculate the arithmetic mean and median for both distance and altitude.
+```{r}
+mean(distance)
+mean(altitude)
+
+median(distance)
+median(altitude)
+```
+
+(b) Determine the first and third quartiles for both the distance and the altitude
+variables. Discuss the shape of the distribution given the results of (a) and (b).
+```{r}
+quantile(distance,probs=0.75)
+quantile(distance,probs=0.25)
+quantile(altitude,probs=0.75)
+quantile(altitude,probs=0.25)
+```
+
+(c) Calculate the interquartile range, absolute median deviation, and standard deviation for both variables. What is your conclusion about the variability of the data?
+```{r}
+quantile(distance,probs=0.75)-quantile(distance,probs=0.25)
+quantile(altitude,probs=0.75)-quantile(altitude,probs=0.25)
+
+amd <- function(mv){1/length(mv)*sum(abs(mv-median(mv)))}
+amd(distance)
+amd(altitude)
+
+var(altitude)
+var(distance)
+```
+
+(e) Draw and interpret the box plot for both distance and altitude.
+```{r}
+par(mar= c(5, 5, 2, 2))
+boxplot(altitude,xlab="",ylab="Altitude (in m)", cex.axis=1.5,lwd=3,cex.lab=1.75,cex.main=1.75) 
+
+par(mar= c(5, 5, 2, 2))
+boxplot(distance,xlab="",ylab="Distance (in km)", cex.axis=1.5,lwd=3,cex.lab=1.75,cex.main=1.75) 
+```
+
+(f) Assumedistanceismeasuredasonlyshort(5–15km),moderate(15–20km),and long (20–30 km). Summarize the grouped data in a frequency table. Calculate the weighted arithmetic mean under the assumption that the raw data is not known. Determine the weighted median under the assumption that the values within each class are equally distributed.
+```{r}
+weighted.mean(c(10,17.5,25),c(4/10,4/10,2/10))
+```
+
+
+Excercise 3.6
+There is no built-in function in R to calculate the mode of a variable. Program such a function yourself. Hint: type ?table and ?names to recall the functionality of these functions. Combine them in an intelligent way.
+```{r}
+mymode <- function(vec){
+mt <- table(vec)
+names(mt)[mt == max(mt)]
+}
+
+mymode(c(1,2,3,3,4))
+mymode(c("1","1","2"))
+```
+
+
+Excercise 3.9
+Four friends have a start-up company which sells vegan ice cream. Their initial financial contributions are as follows:
+```{r}
+u2 <- c(0,0.25,0.5,0.75,1)
+v2 <- c(0,0.044,0.168,0.428,1)
+```
+
+Use R to draw the above Lorenz curve and to calculate the Gini coefficient.
+```{r}
+
+library(ineq)
+investment <- c(800,10300,4700,2200)
+plot(Lc(investment))
+ineq(investment)
+```
+
