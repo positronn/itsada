@@ -1,0 +1,34 @@
+---
+title: "Association of two variables"
+output: html_notebook
+---
+
+Creating a dummie dataset
+```{r}
+X = sample(x=20:35, size=100, replace=TRUE)
+Y = sample(x=30:40, size=100, replace=TRUE)
+```
+
+
+Contingency table
+```{r}
+addmargins(table(X, Y))
+```
+
+
+Contingency table (relative frequencies)
+```{r}
+addmargins(prop.table(table(X,Y)))
+```
+
+
+# Bar charts
+```{r}
+air_class <- c(rep('1: Economy', 62), rep('2: Business', 25), rep('3: First', 13))
+air_rating <- c(rep('1=poor', 10), rep('2=fair', 36), rep('3=Good', 40), rep('4=Very good', 14))
+
+library(lattice)
+barchart(table(air_class, air_rating), horizontal=FALSE, stack=FALSE)
+barchart(table(air_class, air_rating), horizontal=FALSE, stack=FALSE)
+```
+
