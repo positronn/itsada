@@ -32,3 +32,38 @@ barchart(table(air_class, air_rating), horizontal=FALSE, stack=FALSE)
 barchart(table(air_class, air_rating), horizontal=FALSE, stack=FALSE)
 ```
 
+
+To calculate the expected absolute frequencies in R, we can access the
+"expected" object returned from a $\chi^2$-test applied to the respective contingency
+table as follows:
+```{r}
+air_chisq <- chisq.test(table(air_class, air_rating))
+air_chisq
+```
+
+```{r}
+air_chisq$expected
+```
+
+
+Value of $\chi^2$ is between $0 \leq \chi^2 \leq n(\min(k, l) - 1)$
+```{r}
+air_chisq$statistic
+```
+
+
+Computing the Cramer's $V$ Statistic (Normalized $\chi^2$)
+```{r}
+library(vcd)
+assocstats(xtabs(~ air_class + air_rating))
+```
+
+Computing the the (corrected version) Contingency Coefficient $C$
+```{r}
+library(vcd)
+C_max = sqrt(
+    (min(c(3, 4)) - 1) / min(c(3, 4))
+)
+assocstats(xtabs(~ air_class + air_rating))$cont / C_max
+```
+
