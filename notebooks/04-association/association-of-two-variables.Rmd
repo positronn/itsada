@@ -67,3 +67,21 @@ C_max = sqrt(
 assocstats(xtabs(~ air_class + air_rating))$cont / C_max
 ```
 
+
+# Association Between Ordinal and Continuous Variables
+
+```{r}
+X <- c(10.85, 10.44, 10.50, 10.89, 10.62)
+Y <- c(7.84, 7.96, 7.81, 7.47, 7.74)
+```
+
+## Pearson's Correlation Coefficient
+```{r}
+cor(X, Y, method='pearson')
+```
+
+## Spearman's Rank Correlation Coefficient
+```{r}
+cor(X, Y, method='spearman')
+```
+
