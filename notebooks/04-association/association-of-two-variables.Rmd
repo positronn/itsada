@@ -85,3 +85,16 @@ cor(X, Y, method='pearson')
 cor(X, Y, method='spearman')
 ```
 
+
+## Goodman and Kruskal's $\gamma$
+```{r}
+library(ryouready)
+ex <- matrix(
+    c(7, 11, 26, 10, 15, 31),
+    ncol=3,
+    byrow=T
+)
+ord.gamma(ex)
+ord.tau(ex)
+```
+
