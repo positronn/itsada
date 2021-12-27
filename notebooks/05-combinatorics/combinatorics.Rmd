@@ -1,0 +1,20 @@
+---
+title: "Cobinatorics"
+output: html_notebook
+---
+
+Combinatorics is a special branch of mathematics. It has many applications not only in several interesting fields such as enumerative combinatorics (the classical application), but also in other fields, for example in graph theory and optimization.
+
+### Factorial Function
+```{r}
+factorial(40)
+```
+
+
+### Combinations
+```{r}
+n=12
+m=6
+choose(n, m)
+```
+

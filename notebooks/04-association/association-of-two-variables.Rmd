@@ -98,3 +98,101 @@ ord.gamma(ex)
 ord.tau(ex)
 ```
 
+
+## Visualization  of Variables from Different Scales
+Consider again our pizza delivery example. If we are interested in the pizza delivery times by branch, we may simply plot the box plots and ECDF’s of delivery time by branch. Next figure shows that the shortest delivery times can be observed in the branch in the East. Producing these graphs in R is straightforward: The boxplot command can be used for two variables by separating them with the ∼ sign. For the ECDF, we have to produce a plot for each branch and overlay them with the “add=TRUE” option.
+```{r}
+pizza <- read.csv('datasets/pizza_delivery.csv')
+```
+
+```{r}
+boxplot(pizza$time ~ pizza$branch)
+```
+
+```{r}
+plot.ecdf(pizza$time[pizza$branch == 'East'])
+plot.ecdf(pizza$time[pizza$branch=='West'], add=TRUE)
+plot.ecdf(pizza$time[pizza$branch=='Centre'], add=TRUE)
+```
+
+
+
+Exercise 4.8 Make yourself familiar with the Olympic decathlon data described in
+Appendix A.4. Read in and attach the data in R.
+
+(a) Use R to calculate and interpret the Bravais–Pearson correlation coefficient between the results of the discus and the shot-put events.
+(b) There are 10 continuous variables. How many different correlation coefficients can you calculate? How would you summarize them?
+(c) Apply the cor command to the whole data and interpret the output.
+(d) Omit the two rows which contain missing data and interpret the output again.
+
+```{r}
+decathlon <- read.csv("datasets/decathlon.csv", row.names=1)
+attach(decathlon)
+cor(X.Discus,X.High.jump)
+```
+
+```{r}
+cor(decathlon)
+```
+
+```{r}
+cor(na.omit(decathlon))
+```
+
+
+```{r}
+library(corrplot) # nice summary of results with package corrplot(not mentioned in solutions)
+corrplot(cor(na.omit(decathlon)),method="number",col="black",cl.pos="n",tl.col="black")
+
+detach(decathlon)
+```
+
+
+
+Exercise 4.9 We are interested in the pizza delivery data which is described in Appendix A.4.
+(a) Read in the data and create two new binary variables which describe whether a pizza was hot (>65◦C) and the delivery time was short (<30min). Create a contingency table for the two new variables.
+(b) Calculate and interpret the odds ratio for the contingency table from (a).
+(c) UseCramer’sV,Stuart’sτc,GoodmanandKruskal’sγ,andastackedbarchartto explore the association between the categorical time and temperature variables.
+(d) Drawascatterplotforthecontinuoustimeandtemperaturevariables.Determine
+both the Bravais–Pearson and Spearman correlation coefficients.
+(e) Use methods of your choice to explore the relationship between temperature and driver, operator, number of ordered pizzas and bill. Is it clear which of the
+variables influence the pizza temperature?
+
+```{r}
+pizza <- read.csv("datasets/pizza_delivery.csv")
+pizza$tempcat <- cut(pizza$temperature, breaks=c(0,65,100))
+pizza$timecat <- cut(pizza$time, breaks=c(0,30,100))
+attach(pizza)
+```
+
+a)
+```{r}
+addmargins(table(tempcat,timecat))
+```
+
+b)
+```{r}
+(101*261)/(213*691)
+```
+
+c)
+```{r}
+library(vcd)          
+library(ryouready) 
+library(lattice)      
+assocstats(xtabs(~tempcat+timecat))
+ord.gamma(table(tempcat,timecat))
+ord.tau(table(tempcat,timecat))
+```
+
+
+d)
+```{r}
+plot(time,temperature)
+```
+
+e)
+```{r}
+boxplot(temperature~driver)
+boxplot(temperature~operator)
+```

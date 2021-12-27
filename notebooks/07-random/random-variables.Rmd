@@ -1,0 +1,16 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+plot(cars)
+```
+
+Defining a function, for example the CDF, is simple in R: One can use the function command followed by specifying the variables the function evaluates in round brackets (e.g. x) and the function itself in braces (e.g. x/20). Functions can be plotted using the curve command:
+```{r}
+cdf <- function(x){1/20 * x}
+curve(cdf, from=0, to=20)
+```
+

@@ -1,0 +1,61 @@
+---
+title: "8 Probability Distributions"
+output: html_notebook
+---
+
+## Uniform
+
+A bar chart of the frequency distribution of the 1000 sampled numbers with the possible outcomes (2, 5, 8, 10) 
+```{r}
+set.seed(123789)
+x <- sample(x=c(2,5,8,10), size=1000, replace=T,
+prob=c(1/4,1/4,1/4,1/4))
+barplot(table(x), ylim=c(0,300))
+```
+
+
+## Binomial
+
+Suppose we roll an unfair die 50 times with the probability of a tail ptail = 0.6. We thus deal with a B(50, 0.6) distribution which can be plotted using
+the dbinom command. The prefix d stands for “density”.
+```{r}
+n <- 50
+p <- 0.6
+k <- 0:n
+pmf <- dbinom(k,n,p)
+plot(k,pmf, type='h')
+```
+
+Note that we can also calculate the CDF with R. We can use the pbinom(x,n,p) command, where the prefix p stands for probability, to calculate the CDF at any point. For example, suppose we are interested in P(X ≥ 30) = 1 − F(29), that is the probability of observing thirty or more tails; then we write
+```{r}
+1-pbinom(29,50,0.6)
+```
+
+
+Similarly, we can determine quantiles. For instance, the 80 % quantile q which describes that P(X ≤ q) ≥ 0.8 can be obtained by theqbinom(q,n,p)command as follows:
+```{r}
+qbinom(0.8,50,0.6)
+```
+
+
+
+If we want to generate 100 random realizations from a B(50, 0.6) distribution we can use the rbinom command.
+```{r}
+rbinom(100,50,0.6)
+```
+
+
+## Poisson
+
+Example 8.1.6 Suppose a country experiences X = 4 tropical storms on average per year. Then the probability of suffering from only two tropical storms is obtained by using the Poisson distribution as
+
+$$
+P(X=2) = \frac{\lambda^x}{x!}e^{\lambda} = \frac{4^2}{2!}e^{-4} = 0.146525
+$$
+
+If we are interested in the probability that not more than 2 storms are experienced, then
+
+```{r}
+dpois(2,4) + dpois(1,4) + dpois(0,4)
+```
+
