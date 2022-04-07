@@ -59,3 +59,18 @@ If we are interested in the probability that not more than 2 storms are experien
 dpois(2,4) + dpois(1,4) + dpois(0,4)
 ```
 
+## Estimating the mean with confidence intervals
+```{r}
+x <- iris$Sepal.Length
+t.test(x, conf.level=0.95)
+```
+
+
+## Ploting a ML Estimator function
+```{r}
+mlp <- function(lambda) {
+    27 * log(lambda) - log(factorial(4) * factorial(3) * factorial(8) * factorial(6) * factorial(6)) - 5 * lambda
+}
+curve(mlp, from=0, to=10)
+```
+
